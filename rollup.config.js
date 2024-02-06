@@ -1,19 +1,11 @@
-import { nodeResolve } from '@rollup/plugin-node-resolve';
-import { warningHandler } from '@shgysk8zer0/js-utils/rollup';
-import { listDirByExt } from '@shgysk8zer0/npm-utils/fs';
-
-const modules = await listDirByExt('./', '.js');
+const externalPackages = ['@shgysk8zer0/aegis', 'marked', 'marked-highlight', 'highlight.js'];
 
 export default {
-	input: modules.filter(module => ! module.endsWith('.config.js')),
-	external: [],
-	onwarn: warningHandler,
+	input: 'markdown.js',
 	output: {
-		dir: './cjs/',
+		file: 'markdown.cjs',
 		format: 'cjs',
-		preserveModules: true,
-		entryFileNames: '[name].cjs',
-		chunkFileNames: '[name]-[hash].cjs',
 	},
-	plugins: [nodeResolve()],
+	external: id => externalPackages.some(pkg => id.startsWith(pkg)),
 };
+

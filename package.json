@@ -83,7 +83,7 @@
   "dependencies": {
     "@shgysk8zer0/aegis": "^0.0.4",
     "highlight.js": "^11.9.0",
-    "marked": "^11.2.0",
+    "marked": "^12.0.0",
     "marked-highlight": "^2.1.0"
   }
 }

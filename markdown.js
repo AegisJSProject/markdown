@@ -1,9 +1,7 @@
 import { Marked } from 'marked';
 import { markedHighlight } from 'marked-highlight';
 import hljs from 'highlight.js';
-import { createHTMLParser, text } from '@shgysk8zer0/aegis';
-
-const parseStr = args => text.apply(null, args);
+import { text, sanitizeString } from '@shgysk8zer0/aegis';
 
 export function createMDParser({
 	gfm = true,
@@ -17,11 +15,6 @@ export function createMDParser({
 	allowUnknownMarkup,
 	allowComments,
 } = {}) {
-	const parser = createHTMLParser({
-		allowElements, allowAttributes, allowCustomElements, allowUnknownMarkup,
-		allowComments,
-	});
-
 	const marked = new Marked(
 		markedHighlight({
 			langPrefix,
@@ -32,7 +25,14 @@ export function createMDParser({
 		})
 	);
 
-	return (...args) => parser([marked.parse(parseStr(args), { gfm, breaks, silent })]);
+	return (strings, ...args) => {
+		const parsed = marked.parse(text(strings, ...args), { gfm, breaks, silent });
+
+		return sanitizeString(parsed, {
+			allowElements, allowAttributes, allowCustomElements, allowUnknownMarkup,
+			allowComments,
+		});
+	};
 }
 
 export const md = createMDParser({});

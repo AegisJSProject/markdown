@@ -6,6 +6,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.0.3] - 2024-02-26
+
+### Added
+- Add `http-server` as dev dependency + `test/` page
+
+### Changed
+- Use `@highlightjs/cdn-assets` instead of `hightlight.js`
+- Directly use `String.raw` to parse text
+- Misc updates to dependencies
+
+### Fixed
+- Fix incorrect badges in `README.md`
+
 ## [v0.0.2] - 2024-02-08
 
 ### Changed

@@ -2,6 +2,8 @@ import { md } from '@shgysk8zer0/aegis-markdown';
 
 document.getElementById('header').append(md`
 # Hello, World!
+
+## It is currently ${new Date().toLocaleString()}.
 `);
 
 function createStyleSheet(src, { media } = {}) {

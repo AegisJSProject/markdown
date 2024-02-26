@@ -1,6 +1,6 @@
 {
   "name": "@shgysk8zer0/aegis-markdown",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Markdown parser for `@shgysk8zer0/aegis`",
   "keywords": [
     "aegis",
@@ -41,8 +41,16 @@
     "node": ">=18.0.0"
   },
   "private": false,
+  "config": {
+    "serve": {
+      "domain": "localhost",
+      "path": "./",
+      "port": 8080
+    }
+  },
   "scripts": {
     "test": "npm run lint:js && npm run build",
+    "start": "http-server ${npm_package_config_serve_path} -c-1 --port ${npm_package_config_serve_port} --gzip true --brotli true -a ${npm_package_config_serve_domain} -o /test/",
     "preversion": "npm test",
     "prepare": "npm run build",
     "lint:js": "eslint .",
@@ -77,12 +85,14 @@
   },
   "homepage": "https://github.com/shgysk8zer0/aegis-markdown#readme",
   "devDependencies": {
+    "@shgysk8zer0/aegis-styles": "^0.0.3",
     "eslint": "^8.56.0",
+    "http-server": "^14.1.1",
     "rollup": "^4.9.6"
   },
   "dependencies": {
+    "@highlightjs/cdn-assets": "^11.9.0",
     "@shgysk8zer0/aegis": "^0.0.8",
-    "highlight.js": "^11.9.0",
     "marked": "^12.0.0",
     "marked-highlight": "^2.1.0"
   }

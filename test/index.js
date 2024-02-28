@@ -1,28 +1,15 @@
-import { md } from '@shgysk8zer0/aegis-markdown';
+import { md, createStyleSheet, getMarkdown } from '@aegisjsproject/markdown';
+
+document.head.append(
+	createStyleSheet('github', { media: '(prefers-color-scheme: light)' }),
+	createStyleSheet('github-dark', { media: '(prefers-color-scheme: dark)' }),
+);
 
 document.getElementById('header').append(md`
 # Hello, World!
 
 ## It is currently ${new Date().toLocaleString()}.
 `);
-
-function createStyleSheet(src, { media } = {}) {
-	const link = document.createElement('link');
-	link.rel = 'stylesheet';
-	link.crossOrigin = 'anonymous';
-	link.referrerPolicy = 'no-referrer';
-
-	if (typeof media === 'string') {
-		link.media = media;
-	}
-
-	link.href = src;
-
-	return link;
-}
-
-const lightStyle = src => createStyleSheet(src, { media: '(prefers-color-scheme: light)' });
-const darkStyle = src => createStyleSheet(src, { media: '(prefers-color-scheme: dark)' });
 
 customElements.define('md-preview', class HTMLMDPreviewElement extends HTMLElement {
 	#shadow;
@@ -36,10 +23,25 @@ customElements.define('md-preview', class HTMLMDPreviewElement extends HTMLEleme
 		container.part.add('container');
 
 		this.#shadow.append(
-			lightStyle('../node_modules/@highlightjs/cdn-assets/styles/github.min.css'),
-			darkStyle('../node_modules/@highlightjs/cdn-assets/styles/github-dark.min.css'),
+			createStyleSheet('github', { media: '(prefers-color-scheme: light)' }),
+			createStyleSheet('github-dark', { media: '(prefers-color-scheme: dark)' }),
 			container,
 		);
+	}
+
+	async attributeChangedCallback(name, oldVal, newVal) {
+		switch(name) {
+			case 'src':
+				if (typeof newVal === 'string') {
+					this.#shadow.getElementById('container').replaceChildren(await getMarkdown(this.src));
+				} else {
+					this.#shadow.getElementById('container').replaceChildren();
+				}
+				break;
+
+			default:
+				throw new Error(`Unhandled attribute change: ${name}.`);
+		}
 	}
 
 	set content(val) {
@@ -51,8 +53,24 @@ customElements.define('md-preview', class HTMLMDPreviewElement extends HTMLEleme
 		}
 	}
 
+	get src() {
+		return this.getAttribute('src');
+	}
+
+	set src(val) {
+		if (typeof val === 'string' || val instanceof URL) {
+			this.setAttribute('src', val);
+		} else {
+			this.removeAttribute('src');
+		}
+	}
+
 	clear() {
 		this.content = null;
+	}
+
+	static get observedAttributes() {
+		return ['src'];
 	}
 });
 

@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.1.0] - 2024-02-28
+
+### Added
+- Add functions to load `highlight.js` stylesheets and fetch & parse markdown
+
+### Fixed
+- Do not publish `test/` directory
+
+### Changed
+- Renamed to `@aegisjsproject/markdown`
+
 ## [v0.0.3] - 2024-02-26
 
 ### Added

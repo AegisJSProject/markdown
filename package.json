@@ -1,7 +1,7 @@
 {
-  "name": "@shgysk8zer0/aegis-markdown",
-  "version": "0.0.3",
-  "description": "Markdown parser for `@shgysk8zer0/aegis`",
+  "name": "@aegisjsproject/markdown",
+  "version": "0.1.0",
+  "description": "Markdown parser for `@aegisjsproject/core`",
   "keywords": [
     "aegis",
     "markdown",
@@ -66,7 +66,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shgysk8zer0/aegis-markdown.git"
+    "url": "git+https://github.com/AegisJSProject/markdown.git"
   },
   "author": "Chris Zuber <admin@kernvalley.us>",
   "license": "MIT",
@@ -81,18 +81,18 @@
     }
   ],
   "bugs": {
-    "url": "https://github.com/shgysk8zer0/aegis-markdown/issues"
+    "url": "https://github.com/AegisJSProject/markdown/issues"
   },
-  "homepage": "https://github.com/shgysk8zer0/aegis-markdown#readme",
+  "homepage": "https://github.com/AegisJSProject/markdown#readme",
   "devDependencies": {
-    "@shgysk8zer0/aegis-styles": "^0.0.3",
+    "@aegisjsproject/styles": "^0.1.0",
     "eslint": "^8.56.0",
     "http-server": "^14.1.1",
     "rollup": "^4.9.6"
   },
   "dependencies": {
+    "@aegisjsproject/core": "^0.1.0",
     "@highlightjs/cdn-assets": "^11.9.0",
-    "@shgysk8zer0/aegis": "^0.0.8",
     "marked": "^12.0.0",
     "marked-highlight": "^2.1.0"
   }

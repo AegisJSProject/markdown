@@ -1,4 +1,4 @@
-const externalPackages = ['@shgysk8zer0/aegis', 'marked', 'marked-highlight', 'highlight.js'];
+const externalPackages = ['@aegisjsproject/core', 'marked', 'marked-highlight', 'highlight.js'];
 
 export default {
 	input: 'markdown.js',

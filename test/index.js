@@ -8,7 +8,7 @@ document.head.append(
 document.getElementById('header').append(md`
 # Hello, World!
 
-## It is currently ${new Date().toLocaleString()}.
+## It is currently ${new Date()}.
 `);
 
 customElements.define('md-preview', class HTMLMDPreviewElement extends HTMLElement {

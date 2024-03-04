@@ -9,11 +9,11 @@ Markdown parser for [`@aegisjsproject/core`](https://github.com/AegisJSProject/c
 [![GitHub license](https://img.shields.io/github/license/AegisJSProject/markdown.svg)](https://github.com/AegisJSProject/markdown/blob/master/LICENSE)
 [![GitHub last commit](https://img.shields.io/github/last-commit/AegisJSProject/markdown.svg)](https://github.com/AegisJSProject/markdown/commits/master)
 [![GitHub release](https://img.shields.io/github/release/AegisJSProject/markdown?logo=github)](https://github.com/AegisJSProject/markdown/releases)
-[![GitHub Sponsors](https://img.shields.io/github/sponsors/shgysk8zer0?logo=github)](https://github.com/sponsors/shgysk8zer0)
+[![GitHub Sponsors](https://img.shields.io/github/sponsors/AegisJSProject?logo=github)](https://github.com/sponsors/shgysk8zer0)
 
 [![npm](https://img.shields.io/npm/v/@aegisjsproject/markdown)](https://www.npmjs.com/package/@aegisjsproject/markdown)
 ![node-current](https://img.shields.io/node/v/@aegisjsproject/markdown)
-![NPM Unpacked Size](https://img.shields.io/npm/unpacked-size/%40shgysk8zer0%2Fmarkdown)
+![NPM Unpacked Size](https://img.shields.io/npm/unpacked-size/%40aegisjsproject%2Fmarkdown)
 
 [![npm](https://img.shields.io/npm/dw/@aegisjsproject/markdown?logo=npm)](https://www.npmjs.com/package/@aegisjsproject/markdown)
 
@@ -42,7 +42,7 @@ document.head.append(
 document.getElementById('header').append(md`
 # Hello, World!
 
-## It is currently ${new Date().toLocaleString()}.
+## It is currently ${new Date()}.
 `);
 
 customElements.define('md-preview', class HTMLMDPreviewElement extends HTMLElement {

@@ -1,7 +1,8 @@
 import { Marked } from 'marked';
 import { markedHighlight } from 'marked-highlight';
 import hljs from 'highlight.js';
-import { sanitizeString } from '@aegisjsproject/core/core.js';
+import { sanitizeString } from '@aegisjsproject/core/parsers/html.js';
+import { stringify } from '@aegisjsproject/core/stringify.js';
 
 export const hljsURL = new URL(`https://unpkg.com/@highlightjs/cdn-assets@${hljs.versionString}/`);
 
@@ -43,8 +44,8 @@ export function createMDParser({
 		})
 	);
 
-	return (...args) => {
-		const parsed = marked.parse(String.raw.apply(null, args), { gfm, breaks, silent });
+	return (strings, ...args) => {
+		const parsed = marked.parse(String.raw(strings, ...args.map(stringify)), { gfm, breaks, silent });
 
 		return sanitizeString(parsed, {
 			allowElements, allowAttributes, allowCustomElements, allowUnknownMarkup,

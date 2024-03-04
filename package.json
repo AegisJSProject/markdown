@@ -1,6 +1,6 @@
 {
   "name": "@aegisjsproject/markdown",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Markdown parser for `@aegisjsproject/core`",
   "keywords": [
     "aegis",
@@ -85,13 +85,13 @@
   },
   "homepage": "https://github.com/AegisJSProject/markdown#readme",
   "devDependencies": {
-    "@aegisjsproject/styles": "^0.1.0",
+    "@aegisjsproject/styles": "^0.1.1",
     "eslint": "^8.56.0",
     "http-server": "^14.1.1",
     "rollup": "^4.9.6"
   },
   "dependencies": {
-    "@aegisjsproject/core": "^0.1.0",
+    "@aegisjsproject/core": "^0.1.2",
     "@highlightjs/cdn-assets": "^11.9.0",
     "marked": "^12.0.0",
     "marked-highlight": "^2.1.0"

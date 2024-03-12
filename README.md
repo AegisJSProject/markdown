@@ -29,10 +29,55 @@ Markdown parser for [`@aegisjsproject/core`](https://github.com/AegisJSProject/c
 - [Contributing](./.github/CONTRIBUTING.md)
 <!-- - [Security Policy](./.github/SECURITY.md) -->
 
+## Adding language support
+
+In order to reduce bundle size, only plaintext is available/supported by default.
+However, you can easily add support for additional languages in a variety of ways:
+
+### Registering from Static Imports
+
+**Note**: All languages provided by `highlight.js` may be found at [`/es/languages/${lang}.min.js`](https://unpkg.com/browse/@highlightjs/cdn-assets/es/languages/).
+
+```js
+import { registerLanguage } from '@aegisjsproject/markdown';
+import javascript from 'highlight.js/lanuages/javascript.min.js';
+import xml from 'highlight.js/languages/xml.min.js';
+import css from 'highlight.js/languages/css.min.js';
+
+registerLanguage('javascript', javascript);
+registerLanguage('xml', xml);
+registerLanguage('css',css);
+
+// Or
+import { registerLanguages } from '@aegisjsproject/markdown';
+import javascript from 'highlight.js/lanuages/javascript.min.js';
+import xml from 'highlight.js/languages/xml.min.js';
+import css from 'highlight.js/languages/css.min.js';
+
+registerLanguages({ javascript, xml, css });
+```
+
+### Dynamically Loading and Registering using Dynamic Imports
+
+This uses `import()` for dynamic loading of language modules from `unpkg.com`.
+
+**Note**: These are case-sensitive and **MUST** be the correct filename (without extension).
+
+```js
+import { loadLanguages } from '@aegisjsproject/markdown';
+
+await loadLanguages('javascript', 'css', 'xml', 'typescript');
+```
+
 ## Example
 
 ```js
-import { md, createStyleSheet, getMarkdown } from '@aegisjsproject/markdown';
+import { md, createStyleSheet, getMarkdown, registerLanguages } from '@aegisjsproject/markdown';
+import javascript from 'highlight.js/languages/javascript.min.js';
+import css from 'highlight.js/languages/css.min.js';
+import xml from 'highlight.js/languages/xml.min.js';
+
+registerLanguages({ javascript, css, xml });
 
 document.head.append(
 	createStyleSheet('github', { media: '(prefers-color-scheme: light)' }),

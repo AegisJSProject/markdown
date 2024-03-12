@@ -1,10 +1,24 @@
 import { Marked } from 'marked';
 import { markedHighlight } from 'marked-highlight';
-import hljs from 'highlight.js';
 import { sanitizeString } from '@aegisjsproject/core/parsers/html.js';
 import { stringify } from '@aegisjsproject/core/stringify.js';
+import hljs from 'highlight.js/core.min.js';
+import plaintext from 'highlight.js/languages/plaintext.min.js';
 
 export const hljsURL = new URL(`https://unpkg.com/@highlightjs/cdn-assets@${hljs.versionString}/`);
+
+export const registerLanguage =  (name, def) => hljs.registerLanguage(name, def);
+
+export const registerLanguages = langsObj => Object.entries(langsObj)
+	.forEach(([name, lang]) => registerLanguage(name, lang));
+
+export const listLanguages = () => hljs.listLanguages();
+
+export const getLanguage = lang => hljs.getLanguage(lang);
+
+export const getLanguagesObject = () => Object.fromEntries(listLanguages().map(lang => [lang, getLanguage(lang)]));
+
+registerLanguage('plaintext', plaintext);
 
 export function createStyleSheet(path, { media, base = hljsURL } = {}) {
 	const link = document.createElement('link');
@@ -28,12 +42,17 @@ export function createMDParser({
 	silent = false,
 	langPrefix = 'hljs language-',
 	fallbackLang = 'plaintext',
+	languages,
 	allowElements,
 	allowAttributes,
 	allowCustomElements,
 	allowUnknownMarkup,
 	allowComments,
 } = {}) {
+	if (typeof languages === 'object' && languages !== null) {
+		registerLanguages(languages);
+	}
+
 	const marked = new Marked(
 		markedHighlight({
 			langPrefix,
@@ -79,3 +98,10 @@ export async function getMarkdown(url, {
 		return parser`${await resp.text()}`;
 	}
 }
+
+export async function loadLanguage(lang) {
+	await import(`${hljsURL}es/languages/${lang}.min.js`)
+		.then(mod => registerLanguage(lang, mod.default));
+}
+
+export const loadLanguages = async (...langs) => Promise.all(langs.map(loadLanguage));

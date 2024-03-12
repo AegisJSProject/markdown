@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.1.2] - 2024-03-12
+
+### Added
+- Add functions to load and register languages
+
+### Changed
+- Update dependencies
+- Switch to using `core.js` for highlight (reduce size by not including languages)
+- Update README to reflect changes and instruct on registering languages
+
 ## [v0.1.1] - 2024-03-03
 
 ### Changed

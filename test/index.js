@@ -1,4 +1,9 @@
-import { md, createStyleSheet, getMarkdown } from '@aegisjsproject/markdown';
+import { md, createStyleSheet, getMarkdown, registerLanguages } from '@aegisjsproject/markdown';
+import javascript from 'highlight.js/languages/javascript.min.js';
+import css from 'highlight.js/languages/css.min.js';
+import xml from 'highlight.js/languages/xml.min.js';
+
+registerLanguages({ javascript, css, xml });
 
 document.head.append(
 	createStyleSheet('github', { media: '(prefers-color-scheme: light)' }),

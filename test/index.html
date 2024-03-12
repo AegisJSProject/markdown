@@ -6,14 +6,14 @@
 		<meta name="color-scheme" content="light dark" />
 		<meta http-equiv="Content-Security-Policy"
 			content="default-src 'none';
-			script-src 'self' https://unpkg.com/@shgysk8zer0/ 'sha384-b4AE0Ukz5l5K/3zmn4xPLR31Q8sKZmlmfN0L9x54tXdAQYREFfmaTdd/ks3Tz3tw';
+			script-src 'self' https://unpkg.com/@shgysk8zer0/ https://unpkg.com/@highlightjs/ 'sha384-4LGOteXsZnXUIRWdWoTgyYxE6BEOQ/T/AQrVJVpNxPCyWBRL6jyYvKABj6+6JePg';
 			style-src 'self' blob: data: https://unpkg.com/@highlightjs/;
 			img-src 'self' https://img.shields.io/ https://github.com/AegisJSProject/markdown/workflows/ https://github.com/AegisJSProject/markdown/actions/workflows/;
 			connect-src 'self';
 			trusted-types empty#html empty#script sanitizer-raw#html default;
 			require-trusted-types-for 'script';" />
 		<title>Aegis Markdown Test</title>
-		<script type="importmap" integrity="sha384-b4AE0Ukz5l5K/3zmn4xPLR31Q8sKZmlmfN0L9x54tXdAQYREFfmaTdd/ks3Tz3tw">
+		<script type="importmap" integrity="sha384-4LGOteXsZnXUIRWdWoTgyYxE6BEOQ/T/AQrVJVpNxPCyWBRL6jyYvKABj6+6JePg">
 			{
 				"imports": {
 					"@aegisjsproject/core": "../node_modules/@aegisjsproject/core/core.js",
@@ -22,8 +22,8 @@
 					"@aegisjsproject/styles/": "../node_modules/@aegisjsproject/styles/",
 					"@aegisjsproject/markdown": "../markdown.js",
 					"@aegisjsproject/markdown/": "../",
-					"highlight.js": "../node_modules/@highlightjs/cdn-assets/es/highlight.min.js",
-					"highlight.js/": "../node_modules/@highlightjs/cdn-assets/",
+					"highlight.js": "../node_modules/@highlightjs/cdn-assets/es/core.min.js",
+					"highlight.js/": "../node_modules/@highlightjs/cdn-assets/es/",
 					"marked": "../node_modules/marked/lib/marked.esm.js",
 					"marked-highlight": "../node_modules/marked-highlight/src/index.js",
 					"@shgysk8zer0/": "https://unpkg.com/@shgysk8zer0/"

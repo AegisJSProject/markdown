@@ -93,7 +93,7 @@
   "dependencies": {
     "@aegisjsproject/core": "^0.2.0",
     "@highlightjs/cdn-assets": "^11.9.0",
-    "marked": "^13.0.0",
+    "marked": "^14.0.0",
     "marked-highlight": "^2.1.0"
   }
 }

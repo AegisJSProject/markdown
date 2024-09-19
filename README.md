@@ -85,9 +85,9 @@ document.head.append(
 );
 
 document.getElementById('header').append(md`
-# Hello, World!
+  # Hello, World!
 
-## It is currently ${new Date()}.
+  ## It is currently ${new Date()}.
 `);
 
 customElements.define('md-preview', class HTMLMDPreviewElement extends HTMLElement {

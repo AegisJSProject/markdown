@@ -11,13 +11,14 @@ document.head.append(
 );
 
 document.getElementById('header').append(md`
-# Hello, World!
+	# Hello, World!
 
-## It is currently ${new Date()}.
+	## It is currently ${new Date()}.
 `);
 
 customElements.define('md-preview', class HTMLMDPreviewElement extends HTMLElement {
 	#shadow;
+	#connected = Promise.withResolvers();
 
 	constructor() {
 		super();
@@ -34,7 +35,21 @@ customElements.define('md-preview', class HTMLMDPreviewElement extends HTMLEleme
 		);
 	}
 
+	connectedCallback() {
+		if (this.textContent.length !== 0 && ! this.hasAttribute('src')) {
+			this.content = this.textContent;
+		}
+
+		this.#connected.resolve();
+	}
+
+	disconnectedCallback() {
+		this.#connected = Promise.withResolvers();
+	}
+
 	async attributeChangedCallback(name, oldVal, newVal) {
+		await this.#connected.promise;
+
 		switch(name) {
 			case 'src':
 				if (typeof newVal === 'string') {

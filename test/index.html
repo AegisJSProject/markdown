@@ -6,20 +6,22 @@
 		<meta name="color-scheme" content="light dark" />
 		<meta http-equiv="Content-Security-Policy"
 			content="default-src 'none';
-			script-src 'self' https://unpkg.com/@shgysk8zer0/ https://unpkg.com/@highlightjs/ 'sha384-4LGOteXsZnXUIRWdWoTgyYxE6BEOQ/T/AQrVJVpNxPCyWBRL6jyYvKABj6+6JePg';
+			script-src 'self' https://unpkg.com/@shgysk8zer0/ https://unpkg.com/@highlightjs/ 'sha384-dFn72QLYxWJGBlT766qAJZ/rYkOl5y2j0/frzuMSZ3Fizi7VknI65pGi3d9KB0NF';
 			style-src 'self' blob: data: https://unpkg.com/@highlightjs/;
 			img-src 'self' https://img.shields.io/ https://github.com/AegisJSProject/markdown/workflows/ https://github.com/AegisJSProject/markdown/actions/workflows/;
 			connect-src 'self';
-			trusted-types empty#html empty#script sanitizer-raw#html default;
+			trusted-types empty#html empty#script aegis-sanitizer#html default;
 			require-trusted-types-for 'script';" />
 		<title>Aegis Markdown Test</title>
-		<script type="importmap" integrity="sha384-4LGOteXsZnXUIRWdWoTgyYxE6BEOQ/T/AQrVJVpNxPCyWBRL6jyYvKABj6+6JePg">
+		<script type="importmap" integrity="sha384-dFn72QLYxWJGBlT766qAJZ/rYkOl5y2j0/frzuMSZ3Fizi7VknI65pGi3d9KB0NF">
 			{
 				"imports": {
 					"@aegisjsproject/core": "../node_modules/@aegisjsproject/core/core.js",
 					"@aegisjsproject/core/": "../node_modules/@aegisjsproject/core/",
 					"@aegisjsproject/styles": "../node_modules/@aegisjsproject/styles/styles.js",
 					"@aegisjsproject/styles/": "../node_modules/@aegisjsproject/styles/",
+					"@aegisjsproject/sanitizer/": "../node_modules/@aegisjsproject/sanitizer/",
+					"@aegisjsproject/parsers/": "../node_modules/@aegisjsproject/parsers/",
 					"@aegisjsproject/markdown": "../markdown.js",
 					"@aegisjsproject/markdown/": "../",
 					"highlight.js": "../node_modules/@highlightjs/cdn-assets/es/core.min.js",
@@ -30,7 +32,7 @@
 				}
 			}
 		</script>
-		<script type="application/javascript" defer="" referrerpolicy="no-referrer" crossorigin="anonymous" integrity="sha384-Shkrmxly5RI9mCU8DQr6l4VLVJzjPzgx9KP/f5i7pEcl7ZUt0wHiAweGjbpjU2d5" src="https://unpkg.com/@shgysk8zer0/polyfills@0.3.1/all.min.js" fetchpriority="auto"></script>
+		<script type="application/javascript" defer="" referrerpolicy="no-referrer" crossorigin="anonymous" integrity="sha384-uaVA9Le/fIJMMUrQHZyGJ+aAH3EdIhOLxPl+cuBCvvZBltVoc+Kemy4t8KLX3/aF" src="https://unpkg.com/@shgysk8zer0/polyfills@0.4.2/all.min.js" fetchpriority="high"></script>
 		<script type="application/javascript" defer="" referrerpolicy="no-referrer" crossorigin="anonymous" integrity="sha384-55L/wO9o0uIVTeubRIDQB4bewfNqyxrj4OXuxlW24NMEk+ioZwMHVw/tFV78mM+k" src="https://unpkg.com/@shgysk8zer0/kazoo@0.3.1/harden.js" fetchpriority="auto"></script>
 		<script type="module" referrerpolicy="no-referrer" src="./index.js"></script>
 	</head>
@@ -54,7 +56,51 @@
 				</div>
 			</form>
 			<section>
-				<md-preview id="preview"></md-preview>
+				<md-preview id="preview">
+					## A Complex Markdown Example
+
+					### Headings
+
+					* **H1 heading**
+					* ## H2 heading
+					* ### H3 heading
+					* #### H4 heading
+					* ##### H5 heading
+					* ###### H6 heading
+
+					### Lists
+
+					* **Unordered list:**
+					* Item 1
+					* Item 2
+					* Item 3
+					* **Ordered list:**
+					1. Item 1
+					2. Item 2
+					3. Item 3
+
+					### Links
+
+					* **External link:** [Google](https://www.google.com)
+					* **Internal link:** [Jump to the table](#table)
+
+					### Tables
+					| Column 1 | Column 2 | Column 3 |
+					|---|---|---|
+					| Cell 1 | Cell 2 | Cell 3 |
+					| Cell 4 | Cell 5 | Cell 6 |
+
+					### Code Blocks
+
+					**Inline code:** `console.log("Hello, world!");`
+
+					```javascript
+					function greet(name) {
+					console.log("Hello, " + name + "!");
+					}
+					```
+				</md-preview>
 			</section>
+		</main>
 	</body>
 </html>

@@ -85,7 +85,7 @@
   },
   "homepage": "https://github.com/AegisJSProject/markdown#readme",
   "devDependencies": {
-    "@aegisjsproject/styles": "^0.1.1",
+    "@aegisjsproject/styles": "^0.2.0",
     "@shgysk8zer0/eslint-config": "^1.0.1",
     "eslint": "^9.10.0",
     "http-server": "^14.1.1",

@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.1.4] - 2025-02-20
+
+### Add
+- Add minified ESM version
+
+### Changed
+- Bundle `marked` and `marked-highlight` (better for CSP)
+- Switch to using `@shgysk8zer0/http-server` in dev
+- Use minified ESM as default export/module
+
 ## [v0.1.3] - 2024-09-19
 
 ### Added

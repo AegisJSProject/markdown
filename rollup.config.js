@@ -1,11 +1,18 @@
-const externalPackages = ['@aegisjsproject/core', 'marked', 'marked-highlight', 'highlight.js'];
+import terser from '@rollup/plugin-terser';
+import { rollupImport } from '@shgysk8zer0/rollup-import';
+import { importmap } from '@shgysk8zer0/importmap';
 
 export default {
 	input: 'markdown.js',
-	output: {
+	external: ['@aegisjsproject/core/stringify.js'],
+	plugins: [rollupImport(importmap)],
+	output: [{
 		file: 'markdown.cjs',
 		format: 'cjs',
-	},
-	external: id => externalPackages.some(pkg => id.startsWith(pkg)),
+	}, {
+		file: 'markdown.min.js',
+		format: 'esm',
+		plugins: [terser()],
+	}],
 };
 

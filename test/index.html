@@ -4,37 +4,11 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="color-scheme" content="light dark" />
-		<meta http-equiv="Content-Security-Policy"
-			content="default-src 'none';
-			script-src 'self' https://unpkg.com/@shgysk8zer0/ https://unpkg.com/@highlightjs/ 'sha384-dFn72QLYxWJGBlT766qAJZ/rYkOl5y2j0/frzuMSZ3Fizi7VknI65pGi3d9KB0NF';
-			style-src 'self' blob: data: https://unpkg.com/@highlightjs/;
-			img-src 'self' https://img.shields.io/ https://github.com/AegisJSProject/markdown/workflows/ https://github.com/AegisJSProject/markdown/actions/workflows/;
-			connect-src 'self';
-			trusted-types empty#html empty#script aegis-sanitizer#html default;
-			require-trusted-types-for 'script';" />
 		<title>Aegis Markdown Test</title>
-		<script type="importmap" integrity="sha384-dFn72QLYxWJGBlT766qAJZ/rYkOl5y2j0/frzuMSZ3Fizi7VknI65pGi3d9KB0NF">
-			{
-				"imports": {
-					"@aegisjsproject/core": "../node_modules/@aegisjsproject/core/core.js",
-					"@aegisjsproject/core/": "../node_modules/@aegisjsproject/core/",
-					"@aegisjsproject/styles": "../node_modules/@aegisjsproject/styles/styles.js",
-					"@aegisjsproject/styles/": "../node_modules/@aegisjsproject/styles/",
-					"@aegisjsproject/sanitizer/": "../node_modules/@aegisjsproject/sanitizer/",
-					"@aegisjsproject/parsers/": "../node_modules/@aegisjsproject/parsers/",
-					"@aegisjsproject/markdown": "../markdown.js",
-					"@aegisjsproject/markdown/": "../",
-					"highlight.js": "../node_modules/@highlightjs/cdn-assets/es/core.min.js",
-					"highlight.js/": "../node_modules/@highlightjs/cdn-assets/es/",
-					"marked": "../node_modules/marked/lib/marked.esm.js",
-					"marked-highlight": "../node_modules/marked-highlight/src/index.js",
-					"@shgysk8zer0/": "https://unpkg.com/@shgysk8zer0/"
-				}
-			}
-		</script>
-		<script type="application/javascript" defer="" referrerpolicy="no-referrer" crossorigin="anonymous" integrity="sha384-uaVA9Le/fIJMMUrQHZyGJ+aAH3EdIhOLxPl+cuBCvvZBltVoc+Kemy4t8KLX3/aF" src="https://unpkg.com/@shgysk8zer0/polyfills@0.4.2/all.min.js" fetchpriority="high"></script>
+		<script type="importmap" integrity="{{ integrity }}">{{ importmap }}</script>
+		<script type="application/javascript" defer="" referrerpolicy="no-referrer" fetchpriority="high" crossorigin="anonymous" integrity="sha384-T7G03xAxCsbFKNRRvaId3sokCOoB1pV75XfybfcqIauhaQ4JyKdTYoBFpLuTS4ul" src="https://unpkg.com/@shgysk8zer0/polyfills@0.4.9/browser.min.js"></script>
 		<script type="application/javascript" defer="" referrerpolicy="no-referrer" crossorigin="anonymous" integrity="sha384-55L/wO9o0uIVTeubRIDQB4bewfNqyxrj4OXuxlW24NMEk+ioZwMHVw/tFV78mM+k" src="https://unpkg.com/@shgysk8zer0/kazoo@0.3.1/harden.js" fetchpriority="auto"></script>
-		<script type="module" referrerpolicy="no-referrer" src="./index.js"></script>
+		<script type="module" referrerpolicy="no-referrer" src="./test/index.js"></script>
 	</head>
 	<body>
 		<header id="header"></header>

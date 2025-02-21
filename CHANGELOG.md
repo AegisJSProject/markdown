@@ -7,9 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.1.5] - 2025-02-20
+
+### Fixed
+- Include `.min.js` and `.map` when publishing
+
 ## [v0.1.4] - 2025-02-20
 
-### Add
+### Added
 - Add minified ESM version
 
 ### Changed

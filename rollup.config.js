@@ -13,6 +13,7 @@ export default {
 		file: 'markdown.min.js',
 		format: 'esm',
 		plugins: [terser()],
+		sourcemap: true,
 	}],
 };
 

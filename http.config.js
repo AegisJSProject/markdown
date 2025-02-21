@@ -34,5 +34,19 @@ export default {
 				});
 			}
 		}
-	}
+	},
+	responsePostprocessors: [
+		resp => {
+			const types = ['text/plain', 'text/css', 'application/javascript', 'application/json', 'text/css', 'image/svg+xml', 'text/markdown'];
+
+			if (types.includes(resp.headers.get('Content-Type'))) {
+				resp.headers.set('Content-Encoding', 'deflate');
+				return new CompressionStream('deflate');
+			} else if (resp.headers.get('Content-Type') === 'application/octet-stream') {
+				resp.headers.set('Content-Type', 'text/markdown');
+				resp.headers.set('Content-Encoding', 'deflate');
+				return new CompressionStream('deflate');
+			}
+		}
+	]
 };

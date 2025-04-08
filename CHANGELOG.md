@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.1.6] - 2025-04-08
+
+### Added
+- Add stand-alone `parse()` to parse as a regular function
+
 ## [v0.1.5] - 2025-02-20
 
 ### Fixed

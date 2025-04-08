@@ -37,6 +37,57 @@ export function createStyleSheet(path, { media, base = hljsURL } = {}) {
 	return link;
 }
 
+export function parse(input, {
+	gfm = true,
+	breaks = false,
+	silent = false,
+	langPrefix = 'hljs language-',
+	fallbackLang = 'plaintext',
+	addHeadingIDs = true,
+	idPrefix = null,
+	allowElements,
+	allowAttributes,
+	allowCustomElements,
+	allowUnknownMarkup,
+	allowComments,
+} = {}) {
+	const marked = new Marked(
+		markedHighlight({
+			langPrefix,
+			highlight(code, lang) {
+				const language = hljs.getLanguage(lang) ? lang : fallbackLang;
+				return hljs.highlight(code, { language }).value;
+			}
+		})
+	);
+
+	const frag = document.createDocumentFragment();
+	let raw = input.replaceAll(/\\`/g, '`');
+
+	if (String.dedent instanceof Function && raw.startsWith('\n') && /\n\t*$/.test(raw)) {
+		const tmp = [raw];
+		tmp.raw = [raw];
+		Object.freeze(tmp);
+		raw = String.dedent(tmp);
+	}
+
+	const parsed = marked.parse(raw, { gfm, breaks, silent });
+	const doc = Document.parseHTML(parsed, {
+		allowElements, allowAttributes, allowCustomElements, allowUnknownMarkup,
+		allowComments,
+	});
+
+	frag.append(...doc.body.childNodes);
+
+	if (addHeadingIDs) {
+		frag.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach(heading => {
+			heading.id = typeof idPrefix === 'string' ? `${idPrefix}-${sluggify(heading.textContent)}` : sluggify(heading.textContent);
+		});
+	}
+
+	return frag;
+}
+
 export function createMDParser({
 	gfm = true,
 	breaks = false,
@@ -77,10 +128,13 @@ export function createMDParser({
 			raw = String.dedent(tmp);
 		}
 
-		frag.setHTML(marked.parse(raw, { gfm, breaks, silent }), {
+		const parsed = marked.parse(raw, { gfm, breaks, silent });
+		const doc = Document.parseHTML(parsed, {
 			allowElements, allowAttributes, allowCustomElements, allowUnknownMarkup,
 			allowComments,
 		});
+
+		frag.append(...doc.body.childNodes);
 
 		if (addHeadingIDs) {
 			frag.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach(heading => {
@@ -107,10 +161,10 @@ export async function getMarkdown(url, {
 		headers.set('Accept', 'text/markdown');
 	}
 
-	const resp = await fetch(url, { mode, referrerPolicy, headers, ...rest });
+	const resp = await fetch(url, { mode, referrerPolicy, headers, ...rest }).catch(() => Response.error());
 
 	if (! resp.ok) {
-		throw new DOMException(`${resp.url} [${resp.status} ${resp.statusText}]`, 'NetworkError');
+		throw new DOMException(`${resp.url} [${resp.status}]`, 'NetworkError');
 	} else if (! resp.headers.get('Content-Type').startsWith('text/markdown')) {
 		throw new TypeError(`Invalid Content-Type: ${resp.headers.get('Content-Type')}.`);
 	} else {

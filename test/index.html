@@ -11,10 +11,13 @@
 		<script type="module" referrerpolicy="no-referrer" src="./test/index.js"></script>
 	</head>
 	<body>
-		<header id="header"></header>
+		<header id="header">
+			<button type="button" class="btn btn-primary" popovertarget="readme-preview" popovertargetaction="show">Show Readme</button>
+			<button type="button" class="btn btn-primary" popovertarget="preview" popovertargetaction="show">Show MD Preview</button>
+		</header>
 		<main>
 			<section id="readme">
-				<md-preview src="../README.md"></md-preview>
+				<md-preview id="readme-preview" src="../README.md" popover="auto"></md-preview>
 			</section>
 			<form name="test">
 				<fieldset>
@@ -30,7 +33,7 @@
 				</div>
 			</form>
 			<section>
-				<md-preview id="preview">
+				<md-preview id="preview" popover="auto">
 					## A Complex Markdown Example
 
 					### Headings

@@ -86,7 +86,7 @@
   "homepage": "https://github.com/AegisJSProject/markdown#readme",
   "devDependencies": {
     "@aegisjsproject/styles": "^0.2.0",
-    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-terser": "^1.0.0",
     "@shgysk8zer0/eslint-config": "^1.0.1",
     "@shgysk8zer0/http-server": "^1.0.5",
     "@shgysk8zer0/importmap": "^1.4.47",

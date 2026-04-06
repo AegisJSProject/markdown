@@ -1,23 +1,27 @@
+import '@shgysk8zer0/polyfills';
+import { Importmap } from '@shgysk8zer0/importmap';
+const importmap = new Importmap();
+await importmap.importLocalPackage();
+
 export default {
 	open: true,
 	routes: {
 		'/': async (req) => {
 			if (req.destination === 'document') {
 				// Hack to make it not read-only
-				const importmap = await import('@shgysk8zer0/importmap').then(mod => ({ ...mod.importmap }));
+				// const importmap = await import('@shgysk8zer0/importmap').then(mod => ({ ...mod.importmap }));
 				const { readFile } = await import('node:fs/promises');
-				importmap.imports['@aegisjsproject/markdown'] = '/markdown.min.js';
-				importmap.imports['@aegisjsproject/markdown/'] = '/';
+				// importmap.imports['@aegisjsproject/markdown'] = '/markdown.min.js';
+				// importmap.imports['@aegisjsproject/markdown/'] = '/';
 				const json = JSON.stringify(importmap);
-				const hash = new Uint8Array(await crypto.subtle.digest('SHA-384', new TextEncoder().encode(json)));
-				const integrity = 'sha384-' + hash.toBase64();
+				const integrity = await importmap.getIntegrity();
 				const doc = await readFile('./test/index.html', { encoding: 'utf-8' })
 					.then(doc => doc.replace('{{ importmap }}', json).replace('{{ integrity }}', integrity));
 
 				const csp = `default-src 'none';
-					script-src 'self' https://unpkg.com/@shgysk8zer0/ https://unpkg.com/@aegisjsproject/ https://unpkg.com/@highlightjs/ '${integrity}';
+					script-src 'self' https://unpkg.com/@shgysk8zer0/ https://unpkg.com/@aegisjsproject/ https://unpkg.com/@highlightjs/ ${importmap.resolve('marked')} ${importmap.resolve('marked-highlight')} '${integrity}';
 					style-src 'self' blob: https://unpkg.com/@highlightjs/;
-					img-src 'self' https://img.shields.io/ https://github.com/AegisJSProject/markdown/workflows/ https://github.com/AegisJSProject/markdown/actions/workflows/;
+					img-src 'self' https://img.shields.io/ https://github.com/AegisJSProject/markdown/workflows/ https://github.com/AegisJSProject/markdown/actions/workflows/ https://i.imgur.com/;
 					connect-src 'self';
 					trusted-types empty#html empty#script aegis-sanitizer#html;
 					require-trusted-types-for 'script'`;

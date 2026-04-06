@@ -1,4 +1,4 @@
-import { md, createStyleSheet, getMarkdown, registerLanguages, parse } from '@aegisjsproject/markdown';
+import { md, createStyleSheet, getMarkdown, registerLanguages, parse } from '@aegisjsproject/markdown/markdown.js';
 import { css } from '@aegisjsproject/core/parsers/css.js';
 import javascript from 'highlight.js/languages/javascript.min.js';
 import cssLang from 'highlight.js/languages/css.min.js';

@@ -4,6 +4,25 @@ import { stringify } from '@aegisjsproject/core/stringify.js';
 import hljs from 'highlight.js/core.min.js';
 import plaintext from 'highlight.js/languages/plaintext.min.js';
 
+const SANITIZER = {
+	elements: [
+		'a', 'blockquote', 'br', 'code', 'del', 'em', 'h1', 'h2', 'h3', 'h4',
+		'h5', 'h6', 'hr', 'img', 'li', 'ol', 'p', 'pre', 'strong', 'table',
+		'tbody', 'td', 'th', 'thead', 'tr', 'ul', 'span', 'div', 'details',
+		'summary', 'dialog', 'sup', 'sub', 'kbd', 'samp', 'var', 'mark', 'q',
+		'cite', 'abbr', 'figure', 'figcaption', 'time', 'address', 's', 'u',
+		'small', 'b', 'i', 'dfn', 'ins', 'slot',
+	],
+	attributes: [
+		'href', 'src', 'alt', 'width', 'height','download', 'title', 'class', 'id',
+		'loading', 'crossorigin', 'rel', 'decoding', 'target', 'popover',
+		'srcset', 'sizes', 'media', 'datetime', 'dir', 'lang', 'name', 'hidden',
+		'inert', 'itemscope', 'itemtype', 'itemprop', 'itemref', 'itemid',
+	],
+	comments: true,
+	dataAttributes: true,
+};
+
 export const hljsURL = new URL(`https://unpkg.com/@highlightjs/cdn-assets@${hljs.versionString}/`);
 
 export const registerLanguage =  (name, def) => hljs.registerLanguage(name, def);
@@ -20,6 +39,28 @@ export const getLanguagesObject = () => Object.fromEntries(listLanguages().map(l
 registerLanguage('plaintext', plaintext);
 
 const sluggify = str => str.trim().replaceAll(/[^A-Za-z0-9]+/g, '-').toLowerCase();
+
+function cleanUp(template, {
+	addHeadingIDs = true,
+	crossOrigin = 'anonymous',
+	loading = 'lazy',
+	idPrefix = null,
+} = {}) {
+	const frag = template.content;
+
+	if (addHeadingIDs) {
+		frag.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach(heading => {
+			heading.id = typeof idPrefix === 'string' ? `${idPrefix}-${sluggify(heading.textContent)}` : sluggify(heading.textContent);
+		});
+	}
+
+	frag.querySelectorAll('img:not([laoding])').forEach(img => {
+		img.crossOrigin = crossOrigin;
+		img.loading = loading;
+	});
+
+	return frag;
+}
 
 export function createStyleSheet(path, { media, base = hljsURL } = {}) {
 	const link = document.createElement('link');
@@ -45,11 +86,12 @@ export function parse(input, {
 	fallbackLang = 'plaintext',
 	addHeadingIDs = true,
 	idPrefix = null,
-	allowElements,
-	allowAttributes,
-	allowCustomElements,
-	allowUnknownMarkup,
-	allowComments,
+	sanitizer: {
+		elements = SANITIZER.elements,
+		attributes = SANITIZER.attributes,
+		dataAttributes = SANITIZER.dataAttributes,
+		comments = SANITIZER.comments,
+	} = SANITIZER,
 } = {}) {
 	const marked = new Marked(
 		markedHighlight({
@@ -61,7 +103,7 @@ export function parse(input, {
 		})
 	);
 
-	const frag = document.createDocumentFragment();
+	const template = document.createElement('template');
 	let raw = input.replaceAll(/\\`/g, '`');
 
 	if (String.dedent instanceof Function && raw.startsWith('\n') && /\n\t*$/.test(raw)) {
@@ -72,20 +114,12 @@ export function parse(input, {
 	}
 
 	const parsed = marked.parse(raw, { gfm, breaks, silent });
-	const doc = Document.parseHTML(parsed, {
-		allowElements, allowAttributes, allowCustomElements, allowUnknownMarkup,
-		allowComments,
+
+	template.setHTML(parsed, {
+		sanitizer: { elements, attributes, dataAttributes, comments },
 	});
 
-	frag.append(...doc.body.childNodes);
-
-	if (addHeadingIDs) {
-		frag.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach(heading => {
-			heading.id = typeof idPrefix === 'string' ? `${idPrefix}-${sluggify(heading.textContent)}` : sluggify(heading.textContent);
-		});
-	}
-
-	return frag;
+	return cleanUp(template, { addHeadingIDs, idPrefix });
 }
 
 export function createMDParser({
@@ -97,11 +131,12 @@ export function createMDParser({
 	addHeadingIDs = true,
 	idPrefix = null,
 	languages,
-	allowElements,
-	allowAttributes,
-	allowCustomElements,
-	allowUnknownMarkup,
-	allowComments,
+	sanitizer: {
+		elements = SANITIZER.elements,
+		attributes = SANITIZER.attributes,
+		dataAttributes = SANITIZER.dataAttributes,
+		comments = SANITIZER.comments,
+	} = SANITIZER,
 } = {}) {
 	if (typeof languages === 'object' && languages !== null) {
 		registerLanguages(languages);
@@ -118,7 +153,7 @@ export function createMDParser({
 	);
 
 	return (strings, ...args) => {
-		const frag = document.createDocumentFragment();
+		const template = document.createElement('template');
 		let raw = String.raw(strings, ...args.map(stringify)).replaceAll(/\\`/g, '`');
 
 		if (String.dedent instanceof Function && raw.startsWith('\n') && /\n\t*$/.test(raw)) {
@@ -129,20 +164,12 @@ export function createMDParser({
 		}
 
 		const parsed = marked.parse(raw, { gfm, breaks, silent });
-		const doc = Document.parseHTML(parsed, {
-			allowElements, allowAttributes, allowCustomElements, allowUnknownMarkup,
-			allowComments,
+
+		template.setHTML(parsed, {
+			sanitizer: { elements: elements, attributes, comments, dataAttributes }
 		});
 
-		frag.append(...doc.body.childNodes);
-
-		if (addHeadingIDs) {
-			frag.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach(heading => {
-				heading.id = typeof idPrefix === 'string' ? `${idPrefix}-${sluggify(heading.textContent)}` : sluggify(heading.textContent);
-			});
-		}
-
-		return frag;
+		return cleanUp(template, { addHeadingIDs, idPrefix });
 	};
 }
 

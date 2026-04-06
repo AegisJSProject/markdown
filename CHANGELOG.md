@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.1.7] - 2026-04-06
+
+### Changed
+- Update to node 25.3.0
+- Update npm publishing
+- Update various dependencies
+
+### Fixed
+- Update for changes to `Sanitizer`/`setHTML()`
+
 ## [v0.1.6] - 2025-04-08
 
 ### Added

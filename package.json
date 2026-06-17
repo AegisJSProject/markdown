@@ -85,7 +85,7 @@
   },
   "homepage": "https://github.com/AegisJSProject/markdown#readme",
   "devDependencies": {
-    "@aegisjsproject/styles": "^0.3.0",
+    "@aegisjsproject/styles": "^0.4.0",
     "@rollup/plugin-terser": "^1.0.0",
     "@shgysk8zer0/eslint-config": "^1.0.9",
     "@shgysk8zer0/http-server": "^1.1.2",
@@ -95,7 +95,7 @@
     "rollup": "^4.60.1"
   },
   "dependencies": {
-    "@aegisjsproject/core": "^0.2.34",
+    "@aegisjsproject/core": "^0.3.0",
     "@highlightjs/cdn-assets": "^11.11.1",
     "marked-highlight": "^2.2.3"
   }
